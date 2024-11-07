@@ -25,7 +25,6 @@ public class Student {
     private String lastName;
     @NotEmpty(message="email field should not be empty")
     private String email;
-    @NotEmpty(message="age field should not be empty")
     private Integer age;
 
 }

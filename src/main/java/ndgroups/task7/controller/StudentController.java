@@ -20,12 +20,19 @@ public class StudentController {
     @GetMapping
     public ResponseEntity<?> getAllStudents() {
         List<Student> students = studentService.getAllStudents();
+        if (students.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<List<Student>>(students, HttpStatus.OK);
     }
     @GetMapping("/{id}")
     public ResponseEntity<?> getOneStudents(@PathVariable Integer id) {
         Student student = studentService.getOneStudent(id);
+        if (student  == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<Student>(student, HttpStatus.OK);
+
     }
     @PostMapping
     public ResponseEntity<Student> createStudents(@RequestBody Student student) {
@@ -34,8 +41,9 @@ public class StudentController {
     }
     @PutMapping("/{id}")
     public ResponseEntity<?>updateStudent(@PathVariable Integer id, @RequestBody Student student){
-        Student post  = studentService.updateStudent(id, student);
-        return ResponseEntity.status(HttpStatus.CREATED).body(post);
+        Student editStudent  = studentService.updateStudent(id, student);
+        return ResponseEntity.status(HttpStatus.CREATED).body(editStudent);
+
     }
 
     @DeleteMapping("/{id}")
